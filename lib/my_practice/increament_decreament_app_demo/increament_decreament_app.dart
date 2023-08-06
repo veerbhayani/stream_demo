@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:stream_demo/my_practice/increament_decreament_stream.dart';
+
+import 'increament_decreament_stream.dart';
 
 // ignore: must_be_immutable
 class IncreamentDecreamentApp extends StatelessWidget {
