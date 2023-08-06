@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stream_demo/my_practice/increament_decreament_app.dart';
-
-import 'my_practice/increament_decreament_app_demo/increament_decreament_app.dart';
+import 'package:stream_demo/my_practice/simple_crud_app_demo/simple_crud_app.dart';
 
 void main() {
   runApp(
@@ -15,8 +13,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        useMaterial3: true,
+      ),
       debugShowCheckedModeBanner: false,
-      home: IncreamentDecreamentApp(),
+      home: const SimpleCrudApp(),
     );
   }
 }
