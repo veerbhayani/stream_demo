@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:stream_demo/my_practice/simple_crud_app_demo/simple_crud_stream.dart';
 
@@ -56,10 +54,11 @@ class SimpleCrudApp extends StatelessWidget {
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
             child: TextField(
-              decoration: InputDecoration(
+              controller: SimpleCrudStream.txtNameEditingController,
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(
@@ -72,10 +71,11 @@ class SimpleCrudApp extends StatelessWidget {
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
             child: TextField(
-              decoration: InputDecoration(
+              controller: SimpleCrudStream.txtLastNameEditingController,
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(
@@ -83,24 +83,8 @@ class SimpleCrudApp extends StatelessWidget {
                     ),
                   ),
                 ),
-                hintText: 'Father Name',
-                labelText: 'Father Name',
-              ),
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(
-                      25,
-                    ),
-                  ),
-                ),
-                hintText: 'Surname',
-                labelText: 'Surname',
+                hintText: 'Last Name',
+                labelText: 'Last Name',
               ),
             ),
           ),
@@ -118,57 +102,56 @@ class SimpleCrudApp extends StatelessWidget {
               ),
             ),
           ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Radio(
-                  value: SimpleCrudStream.male,
-                  groupValue: SimpleCrudStream.gender,
-                  onChanged: (value) {},
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 5,
-                  top: 5,
-                  bottom: 5,
-                ),
-                child: Text(
-                  "Male",
-                  style: TextStyle(
-                    fontSize: 18,
+          StreamBuilder(
+            stream: SimpleCrudStream.genderStreamController,
+            builder: (context, snapshot) => Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Row(
+                    children: [
+                      Radio(
+                        value: SimpleCrudStream.male,
+                        groupValue: SimpleCrudStream.gender,
+                        onChanged: (value) {
+                          SimpleCrudStream.gender =
+                              SimpleCrudStream.genderControllerValue = value!;
+                        },
+                      ),
+                      const Text(
+                        'Male',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Radio(
-                  value: SimpleCrudStream.female,
-                  groupValue: SimpleCrudStream.gender,
-                  onChanged: (value) {
-                    log("$value");
-                  },
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 5,
-                  top: 5,
-                  bottom: 5,
-                ),
-                child: Text(
-                  "Female",
-                  style: TextStyle(
-                    fontSize: 18,
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Row(
+                    children: [
+                      Radio(
+                        value: SimpleCrudStream.feMale,
+                        groupValue: SimpleCrudStream.gender,
+                        onChanged: (value) {
+                          SimpleCrudStream.genderControllerValue =
+                              SimpleCrudStream.gender = value!;
+                        },
+                      ),
+                      const Text(
+                        'Female',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           const Padding(
             padding: EdgeInsets.only(
@@ -184,137 +167,78 @@ class SimpleCrudApp extends StatelessWidget {
               ),
             ),
           ),
-          Row(
+          Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  top: 5,
-                ),
-                child: Checkbox.adaptive(
-                  value: true,
-                  onChanged: (value) {},
+                padding: const EdgeInsets.only(left: 10),
+                child: Row(
+                  children: [
+                    StreamBuilder(
+                      stream: SimpleCrudStream.hobbyCricketStreamController,
+                      builder: (context, snapshot) => Checkbox(
+                        value: SimpleCrudStream.isCricket,
+                        onChanged: (value) {
+                          SimpleCrudStream.hobbyCricketControllerValue =
+                              SimpleCrudStream.isCricket = value!;
+                        },
+                      ),
+                    ),
+                    const Text(
+                      'Cricket',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 5,
-                  top: 5,
-                  bottom: 5,
-                ),
-                child: Text(
-                  "Cricket",
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
               Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  top: 5,
-                ),
-                child: Checkbox.adaptive(
-                  value: true,
-                  onChanged: (value) {},
+                padding: const EdgeInsets.only(left: 10),
+                child: Row(
+                  children: [
+                    StreamBuilder(
+                      stream: SimpleCrudStream.hobbyFootballStreamController,
+                      builder: (context, snapshot) => Checkbox(
+                        value: SimpleCrudStream.isFootball,
+                        onChanged: (value) {
+                          SimpleCrudStream.hobbyFootballControllerValue =
+                              SimpleCrudStream.isFootball = value!;
+                        },
+                      ),
+                    ),
+                    const Text(
+                      'Football',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 5,
-                  top: 5,
-                  bottom: 5,
-                ),
-                child: Text(
-                  "Football",
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
               Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  top: 5,
-                ),
-                child: Checkbox.adaptive(
-                  value: true,
-                  onChanged: (value) {},
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 5,
-                  top: 5,
-                  bottom: 5,
-                ),
-                child: Text(
-                  "Swimming",
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  top: 5,
-                ),
-                child: Checkbox.adaptive(
-                  value: true,
-                  onChanged: (value) {},
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 5,
-                  top: 5,
-                  bottom: 5,
-                ),
-                child: Text(
-                  "Reading",
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  top: 5,
-                ),
-                child: Checkbox.adaptive(
-                  value: true,
-                  onChanged: (value) {},
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 5,
-                  top: 5,
-                  bottom: 5,
-                ),
-                child: Text(
-                  "Dancing",
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
+                padding: const EdgeInsets.only(left: 10),
+                child: Row(
+                  children: [
+                    StreamBuilder(
+                      stream: SimpleCrudStream.hobbySingingStreamController,
+                      builder: (context, snapshot) => Checkbox(
+                        value: SimpleCrudStream.isSinging,
+                        onChanged: (value) {
+                          SimpleCrudStream.hobbySingingControllerValue =
+                              SimpleCrudStream.isSinging = value!;
+                        },
+                      ),
+                    ),
+                    const Text(
+                      'Singing',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -332,7 +256,10 @@ class SimpleCrudApp extends StatelessWidget {
                 animationDuration: const Duration(
                   seconds: 2,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  SimpleCrudStream.submitControllerValue = true;
+                  SimpleCrudStream.addUserData();
+                },
                 child: const Text(
                   'Submit',
                   style: TextStyle(
@@ -342,6 +269,30 @@ class SimpleCrudApp extends StatelessWidget {
               ),
             ),
           ),
+          StreamBuilder(
+              builder: (context, snapshot) => SimpleCrudStream
+                      .userData.isNotEmpty
+                  ? Expanded(
+                      child: ListView.builder(
+                        itemCount: SimpleCrudStream.userData.length,
+                        itemBuilder: (context, index) => Container(
+                          height: 200,
+                          width: double.infinity,
+                          color: Colors.tealAccent,
+                          child: Column(
+                            children: [
+                              StreamBuilder(
+                                stream: SimpleCrudStream.nameStreamController,
+                                builder: (context, snapshot) => Text(
+                                  snapshot.data.toString(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  : const Center(child: Text('There is not data'))),
         ],
       ),
     );
